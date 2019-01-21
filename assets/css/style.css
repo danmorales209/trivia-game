@@ -1,3 +1,7 @@
 .initial-hidden {
     display: none;
 }
+
+#show-at-end {
+    display: none;
+}

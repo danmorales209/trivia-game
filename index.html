@@ -38,12 +38,16 @@
     <div class="container w-75 ">
         <div class="row initial-view">
             <div class="col-sm">
-                <div class = "jumbotron bg-dark">
+                <div class="jumbotron bg-dark p-3">
                     <h2 id="game-message-display" class="display-4 text-center text-light">Game Message</h2>
                 </div>
             </div>
         </div>
-        
+        <div id="show-at-end" class="row">
+            <div class="col-sm">
+                <button id="reset-game" class="btn btn-lg btn-dark btn-block mx-auto">Play Again?</button>
+            </div>
+        </div>
         <div class="row initial-hidden">
             <div class="col-sm">
                 <div class="card bg-dark">
@@ -57,9 +61,9 @@
                             <a href="#" class="list-group-item list-group-item-action " index="2">Text</a>
                             <a href="#" class="list-group-item list-group-item-action " index="3">Text</a>
                         </div>
-                    <div class="card-footer">
-                        <h5 id="timer-display" class="text-light text-center">timer</h5>
-                    </div>
+                        <div class="card-footer">
+                            <h5 id="timer-display" class="text-light text-center">timer</h5>
+                        </div>
                     </div>
                 </div>
             </div>

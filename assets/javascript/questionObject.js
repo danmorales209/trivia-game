@@ -52,5 +52,8 @@ var dataObject =
             "correct": 3
         }
     ],
-    "currentIndex": 0
+    "currentIndex": 4,
+    "correctAnswers": 0,
+    "incorrectAnswers" : 0,
+    "notAnswered" : 0
 }
