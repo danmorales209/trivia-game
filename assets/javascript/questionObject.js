@@ -1,3 +1,9 @@
+// Data object for game info
+//  .data[] contianers the question
+//          selections (which are displayed as potential answers)
+//          correct: index for correct answer counting from 0
+// currentIndex is used to track through .data array
+// correctAnswers, incorrectAnswers, notAnswered used to track correct answers, incorrect answers, and timed-out responses            
 var dataObject =
 {
     "data": [
@@ -102,7 +108,7 @@ var dataObject =
             "correct": 1
         }
     ],
-    "currentIndex": 9,
+    "currentIndex": 0,
     "correctAnswers": 0,
     "incorrectAnswers" : 0,
     "notAnswered" : 0
