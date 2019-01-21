@@ -1,7 +1,8 @@
 const GUESS_LENGTH = 10;
 var timerID;
 var TIMER_EXPIRED = false;
-var KEEP_PLAYING = true;
+var sfxPlayer;
+var player
 
 
 function gameMessageDisplay(gameState) {
@@ -39,7 +40,7 @@ function initialFades() {
 
 function updateQuestionDisplay() {
     let questions = $(".list-group-item-action");
-    questions.removeClass("bg-success bg-danger");
+    questions.removeClass("bg-success bg-danger text-white");
 
     if (dataObject.currentIndex < dataObject.data.length) {
         $("#question-display").text(dataObject.data[dataObject.currentIndex].question);
@@ -69,52 +70,62 @@ function startGuessTimer() {
 }
 
 function transitionAfterAnswer() {
-    setTimeout(function () {
-        $(".initial-hidden").fadeOut(1000, function () {
-            $(".initial-view").fadeIn(1000, function () {
-                updateQuestionDisplay();
+
+    $(`.list-group-item-action[index!='${dataObject.data[dataObject.currentIndex].correct}']`).fadeOut(1000, function () {
+        setTimeout(function () {
+            $(".initial-hidden").fadeOut(1000, function () {
+                $(".initial-view").fadeIn(1000, function () {
+                    $(".list-group-item-action").css("display", "flex");
+                    updateQuestionDisplay();
+                })
+                $("#timer-display").text(`Time left: ${GUESS_LENGTH} seconds!`);
             })
-            $("#timer-display").text(`Time left: ${GUESS_LENGTH} seconds!`);
-        })
-    }, 2000);
+        }, 3000);
+    });
 
 }
 
 function transitionNewQuestion() {
     setTimeout(function () {
         $(".initial-view").fadeOut(1000, function () {
+            startGuessTimer()
             $(".initial-hidden").fadeIn(1000, function () {
-                startGuessTimer()
             });
         });
 
-    }, 5000);
+    }, 7000);
 }
 
 function checkForTimerExp() {
     setTimeout(function () {
 
         if (TIMER_EXPIRED) {
+
+            sfxPlayer.getElementsByTagName("source")[0].src = "assets/audio/smb_pipe.wav";
+            sfxPlayer.load();
+            sfxPlayer.play();
+
             TIMER_EXPIRED = false;
             dataObject.notAnswered++;
-            
+
             clearInterval(timerID);
-            $(`.list-group-item-action[index=${dataObject.data[dataObject.currentIndex].correct}]`).addClass("bg-success");
+            $(`.list-group-item-action[index=${dataObject.data[dataObject.currentIndex].correct}]`).addClass("bg-success text-white");
             gameMessageDisplay("timeout");
 
             transitionAfterAnswer();
             dataObject.currentIndex++;
 
-            console.log(dataObject.currentIndex + "  " + dataObject.data.length);
-
             if (dataObject.currentIndex < dataObject.data.length) {
                 transitionNewQuestion();
-
-                if (KEEP_PLAYING) {
-                    checkForTimerExp();
-                }
+                checkForTimerExp();
             }
             else {
+                player.pause();
+
+                sfxPlayer.getElementsByTagName("source")[0].src = "assets/audio/smb_stage_clear.wav";
+                sfxPlayer.load();
+                sfxPlayer.play();
+
                 transitionEndScreen();
             }
         }
@@ -126,23 +137,25 @@ function checkForTimerExp() {
 
 function transitionEndScreen() {
     gameMessageDisplay("end");
-
-    setTimeout(function () {
-        $(".initial-hidden").fadeOut(1000, function () {
-            $(".initial-view, #show-at-end").fadeIn(1000, function () {
-                updateQuestionDisplay();
+    // use dataObject.currentIndex - 1 since the calling function increments prior to check
+    $(`.list-group-item-action[index!=${dataObject.data[dataObject.currentIndex - 1].correct}]`).fadeOut(1000, function () {
+        setTimeout(function () {
+            $(".initial-hidden").fadeOut(1000, function () {
+                $(".initial-view, #show-at-end").fadeIn(1000, function () {
+                    updateQuestionDisplay();
+                })
+                $("#timer-display").text(`Time left: ${GUESS_LENGTH} seconds!`);
             })
-            $("#timer-display").text(`Time left: ${GUESS_LENGTH} seconds!`);
-        })
-    }, 2000);
-
+        }, 2000);
+    });
 
 }
 
 function resetTranstion() {
-    $("#show-at-end, .initial-view").fadeOut(1000, function() {
+    $(".list-group-item-action").css("display", "flex");
+    $("#show-at-end, .initial-view").fadeOut(1000, function () {
         gameMessageDisplay("initial");
-        $(".initial-view").fadeIn(1000, function (){
+        $(".initial-view").fadeIn(1000, function () {
             updateQuestionDisplay();
             initialFades();
         })
@@ -164,25 +177,41 @@ function guessButtonAction() {
     if (!TIMER_EXPIRED) {
         if ($(this).attr("index") == dataObject.data[dataObject.currentIndex].correct) {
             dataObject.correctAnswers++;
-            $(this).addClass("bg-success");
+            $(this).addClass("bg-success text-white");
             result = "correct";
+            console.log(sfxPlayer);
+            sfxPlayer.getElementsByTagName("source")[0].src = "assets/audio/smb_powerup.wav";
+            sfxPlayer.load();
+            sfxPlayer.play();
+
         }
         else {
             $(this).addClass("bg-danger");
             dataObject.incorrectAnswers++;
-            $(`.list-group-item-action[index=${dataObject.data[dataObject.currentIndex].correct}]`).addClass("bg-success");
+            $(`.list-group-item-action[index=${dataObject.data[dataObject.currentIndex].correct}]`).addClass("bg-success text-white");
             result = "incorrect";
+
+            sfxPlayer.getElementsByTagName("source")[0].src = "assets/audio/smb_pipe.wav";
+            sfxPlayer.load();
+            sfxPlayer.play();
         }
 
         clearInterval(timerID);
+        gameMessageDisplay(result);
+        transitionAfterAnswer();
         dataObject.currentIndex++;
 
         if (dataObject.currentIndex < dataObject.data.length) {
-            gameMessageDisplay(result);
-            transitionAfterAnswer();
             transitionNewQuestion();
         }
         else {
+
+            player.pause();
+
+            sfxPlayer.getElementsByTagName("source")[0].src = "assets/audio/smb_stage_clear.wav";
+            sfxPlayer.load();
+            sfxPlayer.play();
+
             transitionEndScreen();
         }
     }
@@ -192,9 +221,13 @@ function resetButtonAction() {
     resetData();
     resetTranstion();
     checkForTimerExp();
+    player.play();
 }
 
 $(document).ready(function () {
+
+    player = document.getElementById("background-sound");
+    sfxPlayer = document.getElementById("sfx-player");
 
     gameMessageDisplay("initial");
     initialFades();
@@ -205,6 +238,10 @@ $(document).ready(function () {
     $("#show-at-end").on("click", resetButtonAction);
 
     checkForTimerExp();
+
+    player.volume = 0.33;
+    player.loop = true;
+    player.play();
 
 
 

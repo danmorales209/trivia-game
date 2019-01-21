@@ -2,57 +2,107 @@ var dataObject =
 {
     "data": [
         {
-            "question": "Question 1",
+            "question": "What was Mario's original profession?",
             "selections": [
-                "s1.1",
-                "s1.2",
-                "s1.3",
-                "s1.4"
+                "Plumber",
+                "Carpenter",
+                "Chef",
+                "Doctor"
+            ],
+            "correct": 1
+        },
+        {
+            "question": "What is the name of Mario's brother?",
+            "selections": [
+                "Marco",
+                "Fettucini",
+                "Luigi",
+                "Hanz"
+            ],
+            "correct": 2
+        },
+        {
+            "question": "What iconic food item causes Mario to power-up?",
+            "selections": [
+                "Mushroom",
+                "Pizza",
+                "Spinach",
+                "Cannoli"
+            ],
+            "correct": 0
+        },
+        {
+            "question": "What is the name of Mario's long time dinosaur companion?",
+            "selections": [
+                "Bowser",
+                "Bob",
+                "Birdo",
+                "Yoshi"
             ],
             "correct": 3
         },
         {
-            "question": "Question 2",
+            "question": "What year was Super Mario Bros originally released (in the USA)?",
             "selections": [
-                "s2.1",
-                "s2.2",
-                "s2.3",
-                "s2.4"
+                "1980",
+                "1985",
+                "1990",
+                "1995"
+            ],
+            "correct": 1
+        },
+        {
+            "question": "How many games has Mario appeared in?",
+            "selections": [
+                "Less than 50",
+                "Around 100",
+                "Around 150",
+                "Over 200"
             ],
             "correct": 3
         },
         {
-            "question": "Question 3",
+            "question": "What is the name of the princess Mario is always trying to rescue?",
             "selections": [
-                "s3.1",
-                "s3.2",
-                "s3.3",
-                "s3.4"
+                "Princess Pear",
+                "Princess Orange",
+                "Princess Peach",
+                "Princess Plum"
+            ],
+            "correct": 2
+        },
+        {
+            "question": "How many playable characters are there in Super Mario Bros 2?",
+            "selections": [
+                "1",
+                "2",
+                "3",
+                "4"
             ],
             "correct": 3
         },
         {
-            "question": "Question 4",
+            "question": "What item give Mario the power of invincibility?",
             "selections": [
-                "s4.1",
-                "s4.2",
-                "s4.3",
-                "s4.4"
+                "Star",
+                "Sword",
+                "Bazooka",
+                "Shield"
             ],
-            "correct": 3
+            "correct": 0
         },
         {
-            "question": "Question 5",
+            "question": "What is the name of Mario's reoccurring nemisis?",
             "selections": [
-                "s5.1",
-                "s5.2",
-                "s5.3",
-                "s5.4"
+                "Bruiser",
+                "Bowser",
+                "Killer",
+                "Boomer"
             ],
-            "correct": 3
+            "correct": 1
         }
     ],
-    "currentIndex": 4,
+    "currentIndex": 9,
     "correctAnswers": 0,
     "incorrectAnswers" : 0,
     "notAnswered" : 0
