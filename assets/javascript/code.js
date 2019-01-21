@@ -273,6 +273,7 @@ $(document).ready(function () {
     // start the atmosphere
     player.volume = 0.33;
     player.loop = true;
+    player.load();
     player.play();
 
 
