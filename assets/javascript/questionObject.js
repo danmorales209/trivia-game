@@ -51,5 +51,6 @@ var dataObject =
             ],
             "correct": 3
         }
-    ]
+    ],
+    "currentIndex": 0
 }
