@@ -1,4 +1,4 @@
-const GUESS_LENGTH = 10;
+const GUESS_LENGTH = 15;
 var timerID;
 var TIMER_EXPIRED = false;
 var sfxPlayer;
